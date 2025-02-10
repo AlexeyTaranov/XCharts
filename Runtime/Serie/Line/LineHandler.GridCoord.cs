@@ -152,7 +152,8 @@ namespace XCharts.Runtime
 
             for (int i = 0; i < count; i++)
             {
-                var index = serie.context.dataIndexs[i];
+                bool isHackOnePointLine = (serie as Line)?.DrawOnePointLine == true && count == 2 && serie.context.dataIndexs.Count == 1;
+                var index = isHackOnePointLine ? serie.context.dataIndexs[0] : serie.context.dataIndexs[i];
                 var serieData = serie.GetSerieData(index);
                 if (serieData == null)
                     continue;
@@ -345,6 +346,32 @@ namespace XCharts.Runtime
                     serie.context.dataPoints.Add(np);
                     serie.context.dataIndexs.Add(serieData.index);
                     lp = np;
+                }
+            }
+
+            if (serie.DrawOnePointLine)
+            {
+                if (serie.context.dataPoints.Count == 1)
+                {
+                    var pos = serie.context.dataPoints[0];
+                    var pos0 = pos;
+                    var pos1 = pos;
+                    if (isY == false)
+                    {
+                        pos0.x -= scaleWid / 2f;
+                        pos1.x += scaleWid / 2f;
+                    }
+                    else
+                    {
+                        pos0.y -= scaleWid / 2f;
+                        pos1.y += scaleWid / 2f;
+                    }
+
+                    serie.context.dataPoints.Clear();
+
+                    serie.context.dataPoints.Add(pos0);
+                    serie.context.dataPoints.Add(pos1);
+                    serie.context.dataIgnores.Add(false);
                 }
             }
 

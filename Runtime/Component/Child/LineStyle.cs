@@ -50,6 +50,7 @@ namespace XCharts.Runtime
         [SerializeField][Since("v3.8.1")] private float m_DashLength = 4;
         [SerializeField][Since("v3.8.1")] private float m_DotLength = 2;
         [SerializeField][Since("v3.8.1")] private float m_GapLength = 2;
+        [SerializeField] private bool m_showOnePointLine;
 
         /// <summary>
         /// Whether show line.
@@ -155,6 +156,12 @@ namespace XCharts.Runtime
         {
             get { return m_GapLength; }
             set { if (PropertyUtil.SetStruct(ref m_GapLength, value)) SetVerticesDirty(); }
+        }
+
+        public bool mShowOnePointLine
+        {
+            get => m_showOnePointLine;
+            set { if (PropertyUtil.SetStruct(ref m_showOnePointLine, value)) SetVerticesDirty(); }
         }
 
         public LineStyle()

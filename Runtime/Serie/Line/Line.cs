@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace XCharts.Runtime
 {
@@ -13,6 +14,10 @@ namespace XCharts.Runtime
     [SerieDataComponent(typeof(ItemStyle), typeof(LabelStyle), typeof(SerieSymbol), typeof(EmphasisStyle), typeof(BlurStyle), typeof(SelectStyle))]
     public class Line : Serie, INeedSerieContainer
     {
+        [SerializeField] private bool m_drawOnePointLine;
+
+        public bool DrawOnePointLine => m_drawOnePointLine;
+
         public int containerIndex { get; internal set; }
         public int containterInstanceId { get; internal set; }
         public static Serie AddDefaultSerie(BaseChart chart, string serieName)
